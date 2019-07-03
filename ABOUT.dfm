@@ -368,7 +368,7 @@ object AboutBox: TAboutBox
       Margins.Top = 2
       Margins.Right = 2
       Margins.Bottom = 2
-      Caption = 'Version 0.1'
+      Caption = 'Version 0.2'
       IsControl = True
     end
     object Copyright: TLabel
@@ -386,8 +386,8 @@ object AboutBox: TAboutBox
     object Comments: TLabel
       Left = 10
       Top = 118
-      Width = 279
-      Height = 160
+      Width = 254
+      Height = 32
       Margins.Left = 2
       Margins.Top = 2
       Margins.Right = 2

@@ -423,6 +423,33 @@ object SDIAppForm: TSDIAppForm
     TabOrder = 4
     OnClick = Button1Click
   end
+  object GroupBox1: TGroupBox
+    Left = 456
+    Top = 8
+    Width = 297
+    Height = 37
+    TabOrder = 5
+    object RadioButton1: TRadioButton
+      Left = 32
+      Top = 9
+      Width = 89
+      Height = 17
+      Caption = '  16 bit'
+      Checked = True
+      TabOrder = 0
+      TabStop = True
+      OnClick = RadioButton2Click
+    end
+    object RadioButton2: TRadioButton
+      Left = 127
+      Top = 9
+      Width = 89
+      Height = 17
+      Caption = '  8 bit'
+      TabOrder = 1
+      OnClick = RadioButton2Click
+    end
+  end
   object MainMenu1: TMainMenu
     Images = ImageList1
     Left = 288
@@ -544,7 +571,7 @@ object SDIAppForm: TSDIAppForm
     Left = 352
     Top = 65528
     Bitmap = {
-      494C01010F0013001C0010001000FFFFFFFFFF10FFFFFFFFFFFFFFFF424D3600
+      494C01010F001300200010001000FFFFFFFFFF10FFFFFFFFFFFFFFFF424D3600
       0000000000003600000028000000400000004000000001002000000000000040
       0000000000000000000000000000000000000000000000000000000000000000
       0000000000000000000000000000000000000000000000000000000000000000

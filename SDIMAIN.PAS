@@ -49,6 +49,9 @@ type
     Memo2: TMemo;
     Button1: TButton;
     Label1: TLabel;
+    GroupBox1: TGroupBox;
+    RadioButton1: TRadioButton;
+    RadioButton2: TRadioButton;
     procedure FileNew1Execute(Sender: TObject);
     procedure FileOpen1Execute(Sender: TObject);
     procedure FileSave1Execute(Sender: TObject);
@@ -56,8 +59,9 @@ type
     procedure HelpAbout1Execute(Sender: TObject);
     procedure FormResize(Sender: TObject);
     procedure Button1Click(Sender: TObject);
+    procedure RadioButton2Click(Sender: TObject);
   private
-
+    is8bit: boolean;
   public
     { Public declarations }
   end;
@@ -66,6 +70,7 @@ var
   SDIAppForm: TSDIAppForm;
 
 function HexWordValidation(const pc: string): boolean;
+function HexValidation(const pc: string; const width: byte = 4): boolean;
 
 implementation
 
@@ -103,19 +108,24 @@ end;
 procedure TSDIAppForm.Button1Click(Sender: TObject);
 var i, j, h: integer;
     s, n, t: string;
+    w: integer;
 begin
   memo2.Clear;
+  if is8bit then
+    w := 2
+  else
+    w := 4;
   n := '';
   for i := 0 to memo1.Lines.Count do
   begin
     s:= trim(memo1.Lines[i]);
     j := 1;
-    while j < (length(s) - 2) do
+    while j < (length(s)) do
     begin
-      t := copy(s, j, 4);
-      if HexWordValidation(t) then
+      t := copy(s, j, w);
+      if HexValidation(t, w) then
       begin
-        if t = '0000' then
+        if (t = StringOfChar('0', w)) or (t = '0a') then
         begin
           memo2.Lines.Add(n);
           n := '';
@@ -126,7 +136,7 @@ begin
           n := n + char(h);
         end;
         //showmessage(inttostr(h));
-        j := j + 3;
+        j := j + w - 1;
       end;
       inc(j);
     end;
@@ -142,6 +152,12 @@ end;
 procedure TSDIAppForm.HelpAbout1Execute(Sender: TObject);
 begin
   AboutBox.ShowModal;
+end;
+
+procedure TSDIAppForm.RadioButton2Click(Sender: TObject);
+begin
+  Memo2.Clear;
+  is8Bit := RadioButton2.Checked
 end;
 
 function HexWordValidation(const pc: string): boolean;
@@ -160,6 +176,23 @@ begin
   end;
 
   if test = 'HHHH' then result := true;       // 1234
+end;
+
+function HexValidation(const pc: string; const width: byte = 4): boolean;
+var test, pct: string;
+  i: Integer;
+begin
+  pct := AnsiUpperCase(trim(pc));
+  result := false;
+  test := '';
+  if (length(pct) < width) or (length(pct) > width) then exit;
+  for i := 1 to length(pct) do
+  case pct[i] of
+    '0'..'9': test := test + 'H';
+    'A'..'F': test := test + 'H';
+    else test := test + ' ';
+  end;
+  if test = StringOfChar('H', width) then result := true;       // 12[34]
 end;
 
 end.
